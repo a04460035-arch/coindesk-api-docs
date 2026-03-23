@@ -54,20 +54,3 @@ GET /api/coindesk/converted →
 ### 4. 單元測試覆蓋
 ✅ CurrencyControllerTest: CRUD 全測
 ✅ CoinDeskServiceTest: 時間格式化 + 匯率解析 + DB 合併
-
-🧑‍💻 原始碼結構
-coindesk-app/
-├── pom.xml                 ← Maven + Spring Boot 2.7
-├── src/main/java/
-│   └── com/example/coindesk/
-│       ├── CoinDeskApp.java
-│       ├── controller/     ← CurrencyController + CoinDeskController
-│       ├── service/        ← CoinDeskService（轉換邏輯）
-│       ├── entity/         ← Currency
-│       └── repository/     ← CurrencyRepository
-└── src/test/java/          ← JUnit 測試
-
-📊 效能指標
-啟動時間：3.9 秒
-記憶體：~150MB
-API 延遲：<50ms
