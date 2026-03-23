@@ -1,1 +1,76 @@
 
+### Postman Collection JSON（新建 `postman/CoinDesk-API.json`）
+
+```json
+{
+    "info": {
+        "name": "CoinDesk Spring Boot API",
+        "description": "完整測試 Collection",
+        "_postman_id": "coindesk-api-test",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "1. 查所有幣別",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/api/currencies"
+            }
+        },
+        {
+            "name": "2. 查單筆 USD",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/api/currencies/1"
+            }
+        },
+        {
+            "name": "3. 新增台幣",
+            "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"code\":\"TWD\",\"chineseName\":\"台幣\",\"rate\":1}"
+                },
+                "url": "http://localhost:8080/api/currencies"
+            }
+        },
+        {
+            "name": "4. CoinDesk 原始",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/api/coindesk/raw"
+            }
+        },
+        {
+            "name": "5. CoinDesk 轉換（重點！）",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/api/coindesk/converted"
+            },
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "pm.test(\"轉換成功\", function () {",
+                            "    var jsonData = pm.response.json();",
+                            "    pm.expect(jsonData[0]).to.eql({",
+                            "        updateTime: pm.expect.jsonData[0].updateTime,",
+                            "        code: pm.expect.jsonData[0].code,",
+                            "        chineseName: pm.expect.jsonData[0].chineseName,",
+                            "        rate: pm.expect.jsonData[0].rate",
+                            "    });",
+                            "});"
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
